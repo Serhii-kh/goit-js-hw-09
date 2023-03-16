@@ -6,7 +6,7 @@ const stopBtn = document.querySelector('[data-stop]');
 const body = document.querySelector('body');
 const DISABLED = `disabled`;
 let intervalId = null;
-const getBodyRandomBg = () => {
+const setBodyRandomBg = () => {
   body.style.backgroundColor = getRandomHexColor();
 };
 
@@ -18,7 +18,7 @@ function onStartBtnClick() {
   startBtn.setAttribute(DISABLED, true);
   stopBtn.removeAttribute(DISABLED);
   intervalId = setInterval(() => {
-    getBodyRandomBg();
+    setBodyRandomBg();
   }, 1000);
 }
 function onStopBtnClick() {
