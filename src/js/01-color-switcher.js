@@ -4,23 +4,25 @@ const getRandomHexColor = () => {
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');
 const body = document.querySelector('body');
+const DISABLED = `disabled`;
+let intervalId = null;
 const getBodyRandomBg = () => {
   body.style.backgroundColor = getRandomHexColor();
 };
-let intervalId = null;
 
 startBtn.addEventListener('click', onStartBtnClick);
 stopBtn.addEventListener('click', onStopBtnClick);
+stopBtn.setAttribute(DISABLED, true);
 
 function onStartBtnClick() {
-  startBtn.setAttribute('disabled', true);
-  stopBtn.removeAttribute('disabled');
+  startBtn.setAttribute(DISABLED, true);
+  stopBtn.removeAttribute(DISABLED);
   intervalId = setInterval(() => {
     getBodyRandomBg();
   }, 1000);
 }
 function onStopBtnClick() {
-  startBtn.removeAttribute('disabled');
-  stopBtn.setAttribute('disabled', true);
+  startBtn.removeAttribute(DISABLED);
+  stopBtn.setAttribute(DISABLED, true);
   clearInterval(intervalId);
 }
