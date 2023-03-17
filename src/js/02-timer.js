@@ -18,17 +18,16 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
-      alert(`no no no!`);
+      alert('Please, choose a date in the future!');
+      return;
     } else {
-      getTimeDifference = function () {
-        return (timeDifference = selectedDates[0] - options.defaultDate);
-      };
       startBtn.disabled = false;
+
       startBtn.addEventListener('click', () => {
-        setInterval(() => {
+        intervalId = setInterval(() => {
           console.log(getTimeDifference());
           console.log(convertMs(timeDifference));
-          getTimeDifference();
+          const timeDifference = selectedDates[0] - new Date();
         }, 1000);
       });
     }
@@ -36,6 +35,8 @@ const options = {
 };
 
 flatpickr(input, options);
+
+function timerFace () {}
 
 function convertMs(ms) {
   const second = 1000;
