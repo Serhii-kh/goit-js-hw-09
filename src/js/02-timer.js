@@ -1,5 +1,15 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
+
+const input = document.querySelector('#datetime-picker');
+const startBtn = document.querySelector('[data-start]');
+const seconds = document.querySelector('[data-seconds]');
+const minutes = document.querySelector('[data-minutes]');
+const hours = document.querySelector('[data-hours]');
+const days = document.querySelector('[data-days]');
+let intervalId = null;
+startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -7,9 +17,25 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    if (selectedDates[0] < new Date()) {
+      alert(`no no no!`);
+    } else {
+      getTimeDifference = function () {
+        return (timeDifference = selectedDates[0] - options.defaultDate);
+      };
+      startBtn.disabled = false;
+      startBtn.addEventListener('click', () => {
+        setInterval(() => {
+          console.log(getTimeDifference());
+          console.log(convertMs(timeDifference));
+          getTimeDifference();
+        }, 1000);
+      });
+    }
   },
 };
+
+flatpickr(input, options);
 
 function convertMs(ms) {
   const second = 1000;
@@ -24,15 +50,3 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-
-const input = document.querySelector('#datetime-picker');
-const startBtn = document.querySelector('[data-start]');
-const DISABLED = `disabled`;
-
-startBtn.setAttribute(DISABLED, true);
-
-flatpickr(input, options);
-
-const date = Date.now();
-
-console.log(date);
