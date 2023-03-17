@@ -20,23 +20,27 @@ const options = {
     if (selectedDates[0] < new Date()) {
       alert('Please, choose a date in the future!');
       return;
-    } else {
-      startBtn.disabled = false;
-
-      startBtn.addEventListener('click', () => {
-        intervalId = setInterval(() => {
-          console.log(getTimeDifference());
-          console.log(convertMs(timeDifference));
-          const timeDifference = selectedDates[0] - new Date();
-        }, 1000);
-      });
     }
+    startBtn.disabled = false;
+
+    startBtn.addEventListener('click', () => {
+      intervalId = setInterval(() => {
+        const timeDifference = selectedDates[0] - new Date();
+        const convertation = convertMs(timeDifference);
+        console.log(timerFace(convertation));
+      }, 1000);
+    });
   },
 };
 
 flatpickr(input, options);
 
-function timerFace () {}
+function timerFace({ days, hours, minutes, seconds }) {
+  seconds.textContent = `${seconds}`;
+  minutes.textContent = `${minutes}`;
+  hours.textContent = `${hours}`;
+  days.textContent = `${days}`;
+}
 
 function convertMs(ms) {
   const second = 1000;
