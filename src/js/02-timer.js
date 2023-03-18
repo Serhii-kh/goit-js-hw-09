@@ -4,10 +4,10 @@ import Notiflix from 'notiflix';
 
 const input = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('[data-start]');
-const seconds = document.querySelector('[data-seconds]');
-const minutes = document.querySelector('[data-minutes]');
-const hours = document.querySelector('[data-hours]');
-const days = document.querySelector('[data-days]');
+const secondsSpan = document.querySelector('[data-seconds]');
+const minutesSpan = document.querySelector('[data-minutes]');
+const hoursSpan = document.querySelector('[data-hours]');
+const daysSpan = document.querySelector('[data-days]');
 let intervalId = null;
 startBtn.disabled = true;
 
@@ -18,16 +18,24 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
-      alert('Please, choose a date in the future!');
+      Notiflix.Notify.failure('Please, choose a date in the future!');
       return;
     }
     startBtn.disabled = false;
 
     startBtn.addEventListener('click', () => {
+      startBtn.disabled = true;
+
       intervalId = setInterval(() => {
         const timeDifference = selectedDates[0] - new Date();
         const convertation = convertMs(timeDifference);
-        console.log(timerFace(convertation));
+
+        if (timeDifference < 1000) {
+          clearInterval(intervalId);
+          console.log(timeDifference);
+        }
+
+        timerFace(convertation);
       }, 1000);
     });
   },
@@ -36,10 +44,14 @@ const options = {
 flatpickr(input, options);
 
 function timerFace({ days, hours, minutes, seconds }) {
-  seconds.textContent = `${seconds}`;
-  minutes.textContent = `${minutes}`;
-  hours.textContent = `${hours}`;
-  days.textContent = `${days}`;
+  secondsSpan.textContent = addLeadingZero(`${seconds}`);
+  minutesSpan.textContent = addLeadingZero(`${minutes}`);
+  hoursSpan.textContent = addLeadingZero(`${hours}`);
+  daysSpan.textContent = addLeadingZero(`${days}`);
+}
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
 }
 
 function convertMs(ms) {

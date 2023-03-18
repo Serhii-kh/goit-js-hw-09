@@ -6,6 +6,7 @@ const stopBtn = document.querySelector('[data-stop]');
 const body = document.querySelector('body');
 const DISABLED = `disabled`;
 let intervalId = null;
+
 const setBodyRandomBg = () => {
   body.style.backgroundColor = getRandomHexColor();
 };
