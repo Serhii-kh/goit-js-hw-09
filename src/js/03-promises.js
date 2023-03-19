@@ -11,9 +11,9 @@ function onFormSubmit(e) {
   const numberOfPromises = Number(e.currentTarget.amount.value);
 
   for (let i = 1; i <= numberOfPromises; i += 1) {
-    createPromise(i, firstDelay);
-
     firstDelay += stepDelay;
+
+    createPromise(i, firstDelay);
   }
 }
 
